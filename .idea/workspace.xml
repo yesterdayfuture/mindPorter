@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0b1837b8-6a7c-4e88-a498-15ee687bd7b6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Agent/agentExcuter.py" beforeDir="false" afterPath="$PROJECT_DIR$/Agent/agentExcuter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interface/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Interface/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tools/funcInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tools/funcInfo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,13 +36,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.agentExcuter.executor": "Run",
+    "Python.main.executor": "Run",
     "Python.test.executor": "Run",
     "Python.testOllama.executor": "Run",
+    "Python.testRemoteFuncUse.executor": "Debug",
     "Python.testRemoteRegister.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/zhangtian/mindPorter",
+    "last_opened_file_path": "/Users/zhangtian/mindPorter/examples",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -51,6 +54,15 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/examples" />
+      <recent name="$PROJECT_DIR$/Agent" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Interface" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -68,7 +80,7 @@
       <option name="presentableId" value="Default" />
       <updated>1763342213290</updated>
       <workItem from="1763342214497" duration="19907000" />
-      <workItem from="1763426785319" duration="1809000" />
+      <workItem from="1763426785319" duration="4839000" />
     </task>
     <servers />
   </component>
@@ -103,13 +115,21 @@
           <line>77</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/examples/testRemoteFuncUse.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MindPorter$agentExcuter.coverage" NAME="agentExcuter Coverage Results" MODIFIED="1763365684531" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Agent" />
     <SUITE FILE_PATH="coverage/MindPorter$testOllama.coverage" NAME="testOllama Coverage Results" MODIFIED="1763367043175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/mindPorter$testRemoteRegister.coverage" NAME="testRemoteRegister Coverage Results" MODIFIED="1763428075129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/mindPorter$testRemoteRegister.coverage" NAME="testRemoteRegister Coverage Results" MODIFIED="1763429788696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/mindPorter$testRemoteFuncUse.coverage" NAME="testRemoteFuncUse Coverage Results" MODIFIED="1763431386561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/mindPorter$main.coverage" NAME="main Coverage Results" MODIFIED="1763430559650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Interface" />
     <SUITE FILE_PATH="coverage/MindPorter$test.coverage" NAME="test Coverage Results" MODIFIED="1763367022470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/mindPorter$test.coverage" NAME="test Coverage Results" MODIFIED="1763429882980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
   </component>
 </project>

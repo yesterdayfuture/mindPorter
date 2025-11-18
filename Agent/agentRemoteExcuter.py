@@ -3,13 +3,14 @@ from Utils.config import Config
 import re
 import ast
 import json
+import requests
 
 
-class AgentExcuter:
+class AgentRemoteExcuter:
     """
-    智能体执行器,使用本地工具
+    智能体执行器,使用服务端工具
     """
-    def __init__(self, model: BasicModel, func_doc, func_object):
+    def __init__(self, model: BasicModel, func_doc, url):
         """
         初始化智能体
         :param model: 使用的模型
@@ -18,7 +19,7 @@ class AgentExcuter:
         """
         self.model = model
         self.func_doc = func_doc
-        self.func_object = func_object
+        self.url = url
 
     def run(self, inputs):
         """
@@ -37,7 +38,8 @@ class AgentExcuter:
 
         # 函数介绍
         func_info = ""
-        for v in self.func_doc.values():
+        for item in self.func_doc:
+            v = item.get("func_info")
             func_info += v + "。"
 
         new_inputs = (Config.default_prompt +
@@ -106,22 +108,15 @@ class AgentExcuter:
                     print(f"函数调用结束 或 没有可调用函数")
                     break
 
-                first_func_name = func_tools[0].get("func", "unknow")
-                first_func_param = func_tools[0].get("params", {})
+                first_func_name = func_tools[0].get("func")
+                response = requests.post(url=self.url, json=func_tools[0])
+                response.raise_for_status()     # 不是 2xx 会报异常
 
-                if first_func_name == "unknow":
-                    print(f"未发现对应函数名称")
-                    break
-                first_func = self.func_object.get(first_func_name, "unknow")
+                response_json = response.json()
 
-                if first_func == "unknow":
-                    print(f"未发现对应函数")
-                    break
+                func_results.append(f"函数 {first_func_name} 的运行结果为 {response_json['result']}")
 
-                first_func_result = first_func(**first_func_param)
-                func_results.append(f"函数 {first_func_name} 的运行结果为 {first_func_result}")
-
-                print(f"函数 {first_func_name} 的运行结果为 {first_func_result}")
+                print(f"函数 {first_func_name} 的运行结果为 {response_json['result']}")
 
             return response
         except Exception as e:

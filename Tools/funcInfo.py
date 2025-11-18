@@ -79,7 +79,7 @@ class FuncInfo:
                 response = requests.post(url=url, json={
                     "func_name": func_name,
                     "func_code": func_code,
-                    # "func_info": func_info,
+                    "func_info": func_info,
                 })
                 if response.status_code == 200:
                     print(f"本地函数 {func_name} 远程注册成功")
