@@ -3,22 +3,27 @@ from Utils.config import Config
 import re
 import ast
 import json
+from Utils.Messages.messageStorage.messageToSqlite import MemorySystem, Message
 
 
 class AgentExcuter:
     """
     智能体执行器,使用本地工具
     """
-    def __init__(self, model: BasicModel, func_doc, func_object):
+    def __init__(self, model: BasicModel, func_doc, func_object,iter_num=10, message_store: MemorySystem = None):
         """
         初始化智能体
         :param model: 使用的模型
         :param func_doc: 函数介绍
         :param func_object: 函数对象
+        :param iter_num: 工具中间调用失败时，最大迭代次数
+        :param message_store: 消息持久化存储配置
         """
         self.model = model
         self.func_doc = func_doc
         self.func_object = func_object
+        self.iter_num = iter_num
+        self.message_store = message_store
 
     def run(self, inputs):
         """
@@ -79,7 +84,13 @@ class AgentExcuter:
             print(f"出现错误❌：{str(e)}")
             return False, []
 
-    def __call__(self, inputs):
+    def __call__(self, session_id: str, inputs: str):
+        """
+        智能体执行入口
+        :param session_id: 用户对话唯一标识
+        :param inputs: 用户输入
+        :return:
+        """
         count = 0
         try:
             response = ""
@@ -87,12 +98,34 @@ class AgentExcuter:
             while True:
                 count += 1
 
-                if count > 10:
+                if count > self.iter_num:
                     print(f"达到最大迭代次数 {count} 次")
                     break
 
                 inputs = self._prompt(inputs, func_results)
-                response = self.run(inputs)
+
+                # 消息存储
+                user_message = Message(role="user", content=inputs)
+                self.message_store.store_message(session_id, user_message)
+
+                # 获取对话上下文
+                context = self.message_store.get_recent_context(session_id, limit=5)
+
+                # 构建提示
+                context_str = "\n".join([
+                    f"{msg.role}: {msg.content}"
+                    for msg in context[:-1]  # 排除当前消息
+                ])
+
+                full_inputs = f"""
+                对话历史：
+                {context_str}
+                用户：{inputs}
+                助手："""
+
+                # 执行 大模型
+                response = self.run(full_inputs)
+
                 print(f"\n\n===================== 第 {count} 轮 结果=======================")
                 print(f"模型回复为：{response}")
 
@@ -122,6 +155,21 @@ class AgentExcuter:
                 func_results.append(f"函数 {first_func_name} 的运行结果为 {first_func_result}")
 
                 print(f"函数 {first_func_name} 的运行结果为 {first_func_result}")
+
+                # 存储工具调用和结果
+                tool_message = Message(
+                    role="assistant",
+                    content=response,
+                    metadata={"tool": first_func_name, "args": first_func_param}
+                )
+                self.message_store.store_message(session_id, tool_message)
+
+                result_message = Message(
+                    role="tool",
+                    content=f"函数 {first_func_name} 调用结果为: {first_func_result}",
+                    metadata={"tool": first_func_name, "args": first_func_param, "tool_result": True}
+                )
+                self.message_store.store_message(session_id, result_message)
 
             return response
         except Exception as e:
